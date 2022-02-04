@@ -1,7 +1,8 @@
 /* Random data generator and reference result on CPU */
 
 #pragma once
-#include <numa.h>
+#include <iostream>
+//#include <numa.h>
 #include <vector>
 #include <numeric>
 #include <utility>

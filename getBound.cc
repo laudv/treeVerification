@@ -156,7 +156,7 @@ int main(int argc, char** argv){
       class_label = i % num_classes;
     dfs(model[i], i, no_constr, one_tree_leaves, class_label);
     all_tree_leaves.push_back(one_tree_leaves);
-    cout <<"\n\n" << i <<"th tree\n";
+    //cout <<"\n\n" << i <<"th tree\n";
     
   } 
 
@@ -180,6 +180,12 @@ int main(int argc, char** argv){
       if (num_classes <= 2){ 
         cout << "\n^^^^^^^^^^^^^^^^ binary model  ^^^^^^^^^^^^^^^\n";
         vector<double> sum_best = find_multi_level_best_score(ori_X[n], ori_y[n], -1, all_tree_leaves, num_classes, max_level, eps, max_clique, feature_start, one_attr, only_attr, dp); 
+
+        cout << "\n best score for each level:\t";
+        for (int i=0;i<sum_best.size(); i++){
+          cout << sum_best[i] <<'\t'; 
+        }
+        cout << "\n";
         
         robust = (ori_y[n]<0.5&&sum_best.back()<0)||(ori_y[n]>0.5&&sum_best.back()>0);
       }
@@ -206,6 +212,9 @@ int main(int argc, char** argv){
       if (search_step == 0 && robust) {
         n_initial_success += 1;
       }
+      high_resolution_clock::time_point t9 = high_resolution_clock::now();
+      auto total_duration = duration_cast<microseconds>( t9 - t3 ).count();
+      cout << "time=" << (total_duration * 1e-6) << "\n";
       cout << "Can model be guaranteed robust within eps " << eps << "? (0 for no, 1 for yes): " << robust  <<'\n';
       rob_log.push_back(robust);
       eps_log.push_back(eps);
@@ -253,7 +262,7 @@ int main(int argc, char** argv){
   cout << "verified error at epsilon " << eps_init << " = " << verified_err << endl;
   high_resolution_clock::time_point t2 = high_resolution_clock::now();
   auto total_duration = duration_cast<microseconds>( t2 - t1 ).count();
-  cout << " total running time: " << double(total_duration)/1000000.0 << " seconds\n";
+  cout << "time=" << double(total_duration)/1000000.0 << "\n";
   cout << " per point running time: " << double(total_duration)/1000000.0/num_attack << " seconds\n";
   return 0;
 }

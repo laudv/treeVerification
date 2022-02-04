@@ -26,7 +26,16 @@ void dfs (json tree, int treeid, interval_map<int, Interval> p_box, vector<Leaf>
     Leaf_vec.push_back(Leaf(p_box, treeid, int(tree["nodeid"]), double(leaf_val_num), class_label));
   }
   else {
-      int attr = tree["split"]; 
+      int attr;
+      if (tree["split"].is_string())
+      {
+          std::string attr_str(tree["split"]);
+          std::cout << "attr_str0 " << attr_str << std::endl;
+          attr_str = attr_str.substr(1);
+          std::cout << "attr_str1 " << attr_str << std::endl;
+          attr = std::stoi(attr_str);
+      }
+      else attr = tree["split"]; 
       double threshold = double(tree["split_condition"]); 
       int nodeid = int(tree["nodeid"]);
       json left_subtree;
@@ -288,15 +297,15 @@ vector<double> find_multi_level_best_score (const vector<double>& x, int label, 
   //std::shuffle(std::begin(all_tree_reachable_leaves), std::end(all_tree_reachable_leaves), rng);
   
   //print number of reachable leaves on each tree
-  cout << "number of reachable leaves on each tree:" << '\n';
-  for (int i=0; i< all_tree_reachable_leaves.size(); i++){
-    cout << all_tree_reachable_leaves[i].size() << '\n';
-    for (int j=0; j<all_tree_reachable_leaves[i].size();j++){
-      cout<<", "<<all_tree_reachable_leaves[i][j].treeid<<","<<all_tree_reachable_leaves[i][j].nodeid;
-    }
-    cout<<'\n';
-  }
-  cout << '\n'; 
+  //cout << "number of reachable leaves on each tree:" << '\n';
+  //for (int i=0; i< all_tree_reachable_leaves.size(); i++){
+  //  cout << all_tree_reachable_leaves[i].size() << '\n';
+  //  for (int j=0; j<all_tree_reachable_leaves[i].size();j++){
+  //    cout<<", "<<all_tree_reachable_leaves[i][j].treeid<<","<<all_tree_reachable_leaves[i][j].nodeid;
+  //  }
+  //  cout<<'\n';
+  //}
+  //cout << '\n'; 
   
   vector<double> sum_best;
   vector<vector<Leaf>> new_nodes_array = all_tree_reachable_leaves;

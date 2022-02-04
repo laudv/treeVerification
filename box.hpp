@@ -198,6 +198,7 @@ double point_box_dist(const vector<double>& p, const interval_map<int,Interval>&
   // order < 0 means linf norm
   double res = 0;
   double dist = 0;
+
   for (interval_map<int, Interval>::const_iterator it = b.cbegin(); it != b.cend(); ++it) {
     int attr = it->first; 
     attr = attr - feature_start;
