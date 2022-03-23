@@ -262,8 +262,8 @@ int main(int argc, char** argv){
   cout << "verified error at epsilon " << eps_init << " = " << verified_err << endl;
   high_resolution_clock::time_point t2 = high_resolution_clock::now();
   auto total_duration = duration_cast<microseconds>( t2 - t1 ).count();
-  cout << "time=" << double(total_duration)/1000000.0 << "\n";
-  cout << " per point running time: " << double(total_duration)/1000000.0/num_attack << " seconds\n";
+  cout << "total_time=" << double(total_duration)/1000000.0 << "\n";
+  cout << "per point running time: " << double(total_duration)/1000000.0/num_attack << " seconds\n";
   return 0;
 }
 
